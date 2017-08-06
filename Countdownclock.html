@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đồng hồ đếm ngược online</title>
+    <style>
+        span {
+            border: solid 1px gray;
+            padding: 2px;
+        }
+    </style>
+    <script language="javascript">
+
+            var h = null; // Giờ
+            var m = null; // Phút
+            var s = null; // Giây
+
+            var timeout = null; // Timeout
+
+           function start()
+{
+    if (h === null)
+    {
+        h = parseInt(document.getElementById('hour').value);
+        m = parseInt(document.getElementById('minute').value);
+        s = parseInt(document.getElementById('second').value);
+    }
+
+    if (s === -1){
+        m -= 1;
+        s = 59;
+    }
+
+    if (m === -1){
+        h -= 1;
+        m = 59;
+    }
+
+    if (h == -1){
+        clearTimeout(timeout);
+        alert('Hết giờ');
+        return false;
+    }
+
+    document.getElementById('h').innerText = h.toString();
+    document.getElementById('m').innerText = m.toString();
+    document.getElementById('s').innerText = s.toString();
+
+    timeout = setTimeout(function(){
+        s--;
+        start();
+    }, 1000);
+}
+            function stop(){
+                clearTimeout(timeout);
+            }
+    </script>
+</head>
+<body>
+    <div>
+        <h3>Thời gian:</h3>
+        <input type="text" id="hour" placeholder="Giờ" value="" /> <br />
+        <input type="text" id="minute" placeholder="Phút" value="" /> <br />
+        <input type="text" id="second" placeholder="Giây" value="" />
+        <input type="button" value="Bắt đầu" onclick="start()" />
+        <input type="button" value="Dừng lại" onclick="stop()" />  <br /> <br />
+    </div>
+
+    <div>
+        <span id="h">Giờ</span> :
+        <span id="m">Phút</span> :
+        <span id="s">Giây</span>
+</div>
+</body>
+</html>
